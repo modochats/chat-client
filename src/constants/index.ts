@@ -18,4 +18,5 @@ const BASE_WEBSOCKET_URL = isDev ? "wss://dev-api.modochats.com/ws" : "wss://api
 const VERSION = "0.51";
 const BASE_STORAGE_URL = "https://modochats.s3.ir-thr-at1.arvanstorage.ir";
 const NEW_MESSAGE_AUDIO_URL = `${BASE_STORAGE_URL}/new-message.mp3`;
-export {BASE_API_URL, BASE_WEBSOCKET_URL, VERSION, isDev, isProd, getEnvironment, NEW_MESSAGE_AUDIO_URL, BASE_STORAGE_URL};
+const MAX_SOCKET_RECONNECT_COUNT = 20;
+export {BASE_API_URL, BASE_WEBSOCKET_URL, VERSION, isDev, isProd, getEnvironment, NEW_MESSAGE_AUDIO_URL, BASE_STORAGE_URL, MAX_SOCKET_RECONNECT_COUNT};

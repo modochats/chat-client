@@ -1,5 +1,6 @@
 import {ConversationStatus, MessageType} from "./types.js";
 import {fetchConversationMessages, fetchMarkConversationAsRead, fetchMessageFeedback, fetchReadMessage} from "#src/utils/fetch.js";
+import {EventType} from "../shared/types/events.js";
 
 class Conversation {
   uuid: string;
@@ -22,6 +23,7 @@ class Conversation {
     const chat = window.getMChat?.();
     const message = new ConversationMessage(init);
     this.messages.push(message);
+    chat?.eventEmitter.emit({type: EventType.CONVERSATION_MESSAGE, message, incoming: !!options?.incoming});
     if (options?.incoming) {
       this.unreadCount++;
       // if (chat?.isOpen) this.markAsRead();
@@ -30,7 +32,10 @@ class Conversation {
     }
   }
 
-  addSystemMessage(message: string) {}
+  addSystemMessage(message: string) {
+    const chat = window.getMChat?.();
+    chat?.eventEmitter.emit({type: EventType.CONVERSATION_SYSTEM_MESSAGE, message});
+  }
 
   clear() {
     this.messages = [];
@@ -56,13 +61,13 @@ class Conversation {
     const res = await fetchConversationMessages(this.uuid, chat?.chatbot.uuid as string);
     this.messages = [];
     for (const message of res.results) this.addMessage(message);
+    chat?.eventEmitter.emit({type: EventType.CONVERSATION_MESSAGES_LOAD, messages: this.messages});
   }
 
-  markAsRead() {
+  async markAsRead() {
     const chat = window.getMChat?.();
-    fetchMarkConversationAsRead(this.uuid, chat?.user.uuid as string).then(() => {
-      this.unreadCount = 0;
-    });
+    await fetchMarkConversationAsRead(this.uuid, chat?.user.uuid as string);
+    this.unreadCount = 0;
   }
 }
 
@@ -100,25 +105,23 @@ class ConversationMessage {
     if (init.file) this.fileSrc = init.file;
   }
 
-  fetchRead() {
+  async fetchRead() {
     if (this.isRead === false && this.type !== "USER") {
       this.isRead = true;
-      fetchReadMessage(this.id);
+      await fetchReadMessage(this.id);
     }
   }
 
-  sendFeedBack(liked: boolean) {
+  async sendFeedBack(liked: boolean) {
     const chat = window.getMChat?.();
     if (this.hasFeedback) return; // Prevent multiple feedback submissions
 
     this.hasFeedback = true;
-
-    fetchMessageFeedback(this.id, chat?.user?.uuid as string, chat?.conversationUuid as string, liked)
-      .then(() => {})
-      .catch(() => {
-        // Reset feedback state on error
-        this.hasFeedback = false;
-      });
+    try {
+      await fetchMessageFeedback(this.id, chat?.user?.uuid as string, chat?.conversationUuid as string, liked);
+    } catch {
+      this.hasFeedback = false;
+    }
   }
 
   get repliedTo() {

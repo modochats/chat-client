@@ -1,6 +1,7 @@
 interface AppOptions {
   chatbotUuid: string;
-  userUuid: string;
+  userData: {uuid: string; phoneNumber?: string};
+  conversationUUid?: string;
 }
 interface FetchPaginationRes<T = any> {
   results: T[];

@@ -6,7 +6,7 @@ const fetchModoChatbot = async (publicKey: string) => {
 };
 
 const fetchSendMessage = async (
-  chatbotId: number,
+  chatbotId: string,
   content: string,
   uniqueId: string,
   conversationUuid?: string,

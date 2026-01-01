@@ -1,15 +1,24 @@
 import {Conversation, ConversationMessage} from "./conversation.js";
+import {loadConversation, sendConversationMessage} from "./utils.js";
 
 class ConversationMaster {
   conversation?: Conversation;
   fileMaster: CMFileMaster;
   replyMaster: CMReplyMaster;
-  constructor() {
+  constructor(uuid?: string) {
     this.fileMaster = new CMFileMaster();
     this.replyMaster = new CMReplyMaster();
+    if (uuid) this.loadConversation(uuid);
   }
   get replyingTo() {
     return this.replyMaster.replyingTo;
+  }
+
+  sendMessage(...args: Parameters<typeof sendConversationMessage>) {
+    return sendConversationMessage(...args);
+  }
+  loadConversation(...args: Parameters<typeof loadConversation>) {
+    return loadConversation(...args);
   }
 }
 class CMFileMaster {
