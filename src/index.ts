@@ -1,9 +1,5 @@
 // Types
 export * from "./types/app.d";
-export * from "./types/window.d";
-
-// Tools
-export * from "./tools/fetch";
 
 // Services - Chatbot
 export * from "./services/chatbot/model";
@@ -12,7 +8,6 @@ export * from "./services/chatbot/model";
 export * from "./services/conversation/conversation-master";
 export * from "./services/conversation/conversation";
 export * from "./services/conversation/types.d";
-export * from "./services/conversation/utils";
 
 // Services - Emitter
 export * from "./services/emitter/event-emitter";
