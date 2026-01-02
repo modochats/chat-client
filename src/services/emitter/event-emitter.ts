@@ -1,11 +1,11 @@
-import {EventType, ModoChatEvent, EventListener, EventListenerMap} from "../shared/types/events";
+import {EventType, ChatEvent, EventListener, EventListenerMap} from "../shared/types/events";
 
 export class EventEmitter {
   private listeners: EventListenerMap = {};
   private onceListeners: EventListenerMap = {};
   private wildcardListeners: Set<EventListener> = new Set();
 
-  on<T extends EventType>(eventType: T, listener: EventListener<Extract<ModoChatEvent, {type: T}>>): () => void {
+  on<T extends EventType>(eventType: T, listener: EventListener<Extract<ChatEvent, {type: T}>>): () => void {
     if (!this.listeners[eventType]) {
       this.listeners[eventType] = new Set() as any;
     }
@@ -14,7 +14,7 @@ export class EventEmitter {
     return () => this.off(eventType, listener);
   }
 
-  once<T extends EventType>(eventType: T, listener: EventListener<Extract<ModoChatEvent, {type: T}>>): () => void {
+  once<T extends EventType>(eventType: T, listener: EventListener<Extract<ChatEvent, {type: T}>>): () => void {
     if (!this.onceListeners[eventType]) {
       this.onceListeners[eventType] = new Set() as any;
     }
@@ -23,14 +23,14 @@ export class EventEmitter {
     return () => this.offOnce(eventType, listener);
   }
 
-  off<T extends EventType>(eventType: T, listener: EventListener<Extract<ModoChatEvent, {type: T}>>): void {
+  off<T extends EventType>(eventType: T, listener: EventListener<Extract<ChatEvent, {type: T}>>): void {
     const listeners = this.listeners[eventType];
     if (listeners) {
       listeners.delete(listener as EventListener);
     }
   }
 
-  private offOnce<T extends EventType>(eventType: T, listener: EventListener<Extract<ModoChatEvent, {type: T}>>): void {
+  private offOnce<T extends EventType>(eventType: T, listener: EventListener<Extract<ChatEvent, {type: T}>>): void {
     const listeners = this.onceListeners[eventType];
     if (listeners) {
       listeners.delete(listener as EventListener);
@@ -46,7 +46,7 @@ export class EventEmitter {
     this.wildcardListeners.delete(listener);
   }
 
-  async emit(event: ModoChatEvent): Promise<void> {
+  async emit(event: ChatEvent): Promise<void> {
     const regularListeners = this.listeners[event.type];
     if (regularListeners) {
       const promises = Array.from(regularListeners as any).map((listener: any) => this.safeInvoke(listener, event));
@@ -68,7 +68,7 @@ export class EventEmitter {
     }
   }
 
-  private async safeInvoke(listener: EventListener, event: ModoChatEvent): Promise<void> {
+  private async safeInvoke(listener: EventListener, event: ChatEvent): Promise<void> {
     try {
       await listener(event);
     } catch (error) {

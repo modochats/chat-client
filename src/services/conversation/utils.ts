@@ -31,7 +31,7 @@ const sendConversationMessage = async (message: string) => {
       if (chat.conversation?.status === "AI_CHAT") await chat.conversation.loadMessages();
     }
   } else {
-    console.error("ModoChat instance not found");
+    console.error("Chat instance not found");
   }
 };
 

@@ -5,9 +5,9 @@ import {ConversationMaster} from "./services/conversation/conversation-master";
 import {Socket} from "./services/socket/socket";
 import {User} from "./services/user/model";
 import {AppOptions} from "./types/app";
-import {EventListener, EventType, ModoChatEvent} from "./services/shared/types/events";
+import {EventListener, EventType, ChatEvent} from "./services/shared/types/events";
 
-class ModoChatClient {
+class ChatClient {
   conversationM: ConversationMaster;
   socket: Socket;
   chatbot: Chatbot;
@@ -45,15 +45,15 @@ class ModoChatClient {
   }
 
   // event emitter
-  on<T extends EventType>(eventType: T, listener: EventListener<Extract<ModoChatEvent, {type: T}>>): () => void {
+  on<T extends EventType>(eventType: T, listener: EventListener<Extract<ChatEvent, {type: T}>>): () => void {
     return this.eventEmitter.on(eventType, listener);
   }
 
-  once<T extends EventType>(eventType: T, listener: EventListener<Extract<ModoChatEvent, {type: T}>>): () => void {
+  once<T extends EventType>(eventType: T, listener: EventListener<Extract<ChatEvent, {type: T}>>): () => void {
     return this.eventEmitter.once(eventType, listener);
   }
 
-  off<T extends EventType>(eventType: T, listener: EventListener<Extract<ModoChatEvent, {type: T}>>): void {
+  off<T extends EventType>(eventType: T, listener: EventListener<Extract<ChatEvent, {type: T}>>): void {
     this.eventEmitter.off(eventType, listener);
   }
 
@@ -66,4 +66,4 @@ class ModoChatClient {
   }
 }
 
-export {ModoChatClient};
+export {ChatClient};

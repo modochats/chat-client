@@ -1,8 +1,8 @@
-import {ModoChatClient} from "../app.js";
+import {ChatClient} from "../app.js";
 
 declare global {
   interface Window {
-    getMChat?: () => ModoChatClient;
+    getMChat?: () => ChatClient;
   }
 }
 

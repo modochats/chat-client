@@ -42,7 +42,7 @@ export interface ConversationLoadEvent extends BaseEvent {
   type: EventType.CONVERSATION_LOAD;
 }
 
-export type ModoChatEvent =
+export type ChatEvent =
   | SocketConnectedEvent
   | SocketDisconnectedEvent
   | ConversationMessageEvent
@@ -50,8 +50,8 @@ export type ModoChatEvent =
   | ConversationSystemMessageEvent
   | ConversationLoadEvent;
 
-export type EventListener<T extends ModoChatEvent = ModoChatEvent> = (event: T) => void | Promise<void>;
+export type EventListener<T extends ChatEvent = ChatEvent> = (event: T) => void | Promise<void>;
 
 export type EventListenerMap = {
-  [K in EventType]?: Set<EventListener<Extract<ModoChatEvent, {type: K}>>>;
+  [K in EventType]?: Set<EventListener<Extract<ChatEvent, {type: K}>>>;
 };
