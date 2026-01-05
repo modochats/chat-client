@@ -1,5 +1,5 @@
 import {BASE_WEBSOCKET_URL, MAX_SOCKET_RECONNECT_COUNT} from "#src/constants/index.js";
-import {ConversationMessage} from "#root/src/services/conversation/conversation.js";
+import {ConversationMessage} from "#root/src/services/chat/conversation.model.js";
 import {SocketMessage} from "./types.js";
 import {fetchGetAccessTokenForSocket} from "#src/utils/fetch.js";
 import {EventType} from "../shared/types/events.js";

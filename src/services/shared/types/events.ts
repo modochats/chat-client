@@ -1,4 +1,4 @@
-import {ConversationMessage} from "../../conversation/conversation";
+import {ConversationMessage} from "../../chat/conversation.model";
 
 export enum EventType {
   SOCKET_CONNECTED,

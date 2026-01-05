@@ -5,9 +5,9 @@ export * from "./types/app.d";
 export * from "./services/chatbot/model";
 
 // Services - Conversation
-export * from "./services/conversation/conversation-master";
-export * from "./services/conversation/conversation";
-export * from "./services/conversation/types.d";
+export * from "./services/chat/chat.model";
+export * from "./services/chat/conversation.model";
+export * from "./services/chat/types";
 
 // Services - Emitter
 export * from "./services/emitter/event-emitter";

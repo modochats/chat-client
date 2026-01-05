@@ -1,12 +1,12 @@
-import {Conversation, ConversationMessage} from "./conversation.js";
+import {Conversation, ConversationMessage} from "./conversation.model.js";
 import {loadConversation, sendConversationMessage} from "./utils.js";
 
-class ConversationMaster {
+class Chat {
   conversation?: Conversation;
-  fileMaster: CMFileMaster;
+  fileMaster: CFileMaster;
   replyMaster: CMReplyMaster;
   constructor(uuid?: string) {
-    this.fileMaster = new CMFileMaster();
+    this.fileMaster = new CFileMaster();
     this.replyMaster = new CMReplyMaster();
     if (uuid) this.loadConversation(uuid);
   }
@@ -21,7 +21,7 @@ class ConversationMaster {
     return loadConversation(...args);
   }
 }
-class CMFileMaster {
+class CFileMaster {
   file?: File;
 
   clearFile() {
@@ -43,4 +43,4 @@ class CMReplyMaster {
     this.replyingTo = undefined;
   }
 }
-export {ConversationMaster};
+export {Chat};

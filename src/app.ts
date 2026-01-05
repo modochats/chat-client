@@ -1,21 +1,21 @@
 import {EventEmitter} from "./services/emitter/event-emitter";
 import {Chatbot} from "./services/chatbot/model";
-import {Conversation} from "./services/conversation/conversation";
-import {ConversationMaster} from "./services/conversation/conversation-master";
+import {Conversation} from "./services/chat/conversation.model";
+import {Chat} from "./services/chat/chat.model";
 import {Socket} from "./services/socket/socket";
 import {User} from "./services/user/model";
 import {AppOptions} from "./types/app";
 import {EventListener, EventType, ChatEvent} from "./services/shared/types/events";
 
 class ChatClient {
-  conversationM: ConversationMaster;
+  chat: Chat;
   socket: Socket;
   chatbot: Chatbot;
   user: User;
   eventEmitter: EventEmitter;
 
   constructor({chatbotUuid, userData, conversationUUid}: AppOptions) {
-    this.conversationM = new ConversationMaster(conversationUUid);
+    this.chat = new Chat(conversationUUid);
     this.socket = new Socket();
     this.chatbot = new Chatbot(chatbotUuid);
     this.user = new User(userData);
@@ -23,7 +23,7 @@ class ChatClient {
   }
 
   get conversation() {
-    return this.conversationM.conversation;
+    return this.chat.conversation;
   }
   get conversationUuid() {
     return this.conversation?.uuid;
