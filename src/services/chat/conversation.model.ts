@@ -62,6 +62,7 @@ class Conversation {
     this.messages = [];
     for (const message of res.results) this.addMessage(message);
     chat?.eventEmitter.emit({type: EventType.CONVERSATION_MESSAGES_LOAD, messages: this.messages});
+    return this.messages;
   }
 
   async markAsRead() {
