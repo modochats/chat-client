@@ -13,7 +13,7 @@ const fetchSendMessage = async (
   }
 ) => {
   const formData = new FormData();
-  formData.append("chatbot_id", chatbotId.toString());
+  formData.append("chatbot_uuid", chatbotId.toString());
   formData.append("content", content);
   formData.append("message_type", "0");
   formData.append("unique_id", uniqueId);
