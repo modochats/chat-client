@@ -18,9 +18,9 @@ class ChatClient {
     this.user = new User(userData);
     this.chatbot = new Chatbot(chatbotUuid);
     this.eventEmitter = new EventEmitter();
+    window.getMChat = () => this;
     if (conversationUUid) this.loadConversation(conversationUUid);
     this.socket = new Socket();
-    window.getMChat = () => this;
   }
   get conversationUuid() {
     return this.conversation?.uuid;

@@ -60,6 +60,8 @@ class Conversation {
     const chat = window.getMChat?.();
     const res = await fetchConversationMessages(this.uuid, chat?.chatbot.uuid as string);
     this.messages = [];
+    chat?.eventEmitter.emit({type: EventType.CONVERSATION_MESSAGES_CLEAR});
+
     for (const message of res.results) this.addMessage(message);
     chat?.eventEmitter.emit({type: EventType.CONVERSATION_MESSAGES_LOAD, messages: this.messages});
     return this.messages;

@@ -5,6 +5,7 @@ export enum EventType {
   SOCKET_DISCONNECTED,
   CONNECTION_ERROR,
   CONVERSATION_MESSAGE,
+  CONVERSATION_MESSAGES_CLEAR,
   CONVERSATION_MESSAGES_LOAD,
   CONVERSATION_SYSTEM_MESSAGE,
   CONVERSATION_LOAD
@@ -33,6 +34,9 @@ export interface ConversationMessagesLoadEvent extends BaseEvent {
   type: EventType.CONVERSATION_MESSAGES_LOAD;
   messages: ConversationMessage[];
 }
+export interface ConversationMessagesClearEvent extends BaseEvent {
+  type: EventType.CONVERSATION_MESSAGES_CLEAR;
+}
 
 export interface ConversationSystemMessageEvent extends BaseEvent {
   type: EventType.CONVERSATION_SYSTEM_MESSAGE;
@@ -48,7 +52,8 @@ export type ChatEvent =
   | ConversationMessageEvent
   | ConversationMessagesLoadEvent
   | ConversationSystemMessageEvent
-  | ConversationLoadEvent;
+  | ConversationLoadEvent
+  | ConversationMessagesClearEvent;
 
 export type EventListener<T extends ChatEvent = ChatEvent> = (event: T) => void | Promise<void>;
 
