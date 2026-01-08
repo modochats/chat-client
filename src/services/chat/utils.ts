@@ -1,4 +1,5 @@
 import {fetchConversations, fetchSendMessage} from "#root/src/utils/fetch";
+import {EventType} from "../shared/types/events";
 import {Conversation} from "./conversation.model";
 
 const sendConversationMessage = async (message: string, {file, replyTo}: {file?: File; replyTo?: number} = {}) => {
@@ -22,6 +23,7 @@ const sendConversationMessage = async (message: string, {file, replyTo}: {file?:
 
     if (!chat?.conversation?.uuid) {
       chat.conversation = new Conversation(sendMsgRes.conversation);
+      chat.eventEmitter.emit({type: EventType.CONVERSATION_LOAD});
       chat.conversation?.addMessage(sendMsgRes);
       await chat.socket.connect();
       if (chat.conversation?.status === "AI_CHAT") await chat.conversation.loadMessages();
@@ -37,6 +39,7 @@ const loadConversation = async (uuid: string) => {
     const res = await fetchConversations(uuid, chat.user.uuid);
     if (res.results.length > 0) {
       chat.conversation = new Conversation(res.results[0]);
+      chat.eventEmitter.emit({type: EventType.CONVERSATION_LOAD});
     }
   }
 };

@@ -1,6 +1,6 @@
 {
   "name": "@modochats/chat-client",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "TypeScript SDK for Modo Chat Agent - Real-time communication with AI",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
