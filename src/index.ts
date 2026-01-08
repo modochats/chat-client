@@ -1,11 +1,10 @@
 // Types
-export * from "./types/app.d";
+export * from "./types/app";
 
 // Services - Chatbot
 export * from "./services/chatbot/model";
 
 // Services - Conversation
-export * from "./services/chat/chat.model";
 export * from "./services/chat/conversation.model";
 export * from "./services/chat/types";
 
@@ -17,7 +16,7 @@ export * from "./services/shared/types/events";
 
 // Services - Socket
 export * from "./services/socket/socket";
-export * from "./services/socket/types.d";
+export * from "./services/socket/types";
 
 // Services - User
 export * from "./services/user/model";

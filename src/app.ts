@@ -1,29 +1,25 @@
 import {EventEmitter} from "./services/emitter/event-emitter";
 import {Chatbot} from "./services/chatbot/model";
 import {Conversation} from "./services/chat/conversation.model";
-import {Chat} from "./services/chat/chat.model";
 import {Socket} from "./services/socket/socket";
 import {User} from "./services/user/model";
 import {AppOptions} from "./types/app";
 import {EventListener, EventType, ChatEvent} from "./services/shared/types/events";
+import {loadConversation, sendConversationMessage} from "./services/chat/utils";
 
 class ChatClient {
-  chat: Chat;
+  conversation?: Conversation;
   socket: Socket;
   chatbot: Chatbot;
   user: User;
   eventEmitter: EventEmitter;
 
   constructor({chatbotUuid, userData, conversationUUid}: AppOptions) {
-    this.chat = new Chat(conversationUUid);
-    this.socket = new Socket();
-    this.chatbot = new Chatbot(chatbotUuid);
     this.user = new User(userData);
+    this.chatbot = new Chatbot(chatbotUuid);
     this.eventEmitter = new EventEmitter();
-  }
-
-  get conversation() {
-    return this.chat.conversation;
+    if (conversationUUid) this.loadConversation(conversationUUid);
+    this.socket = new Socket();
   }
   get conversationUuid() {
     return this.conversation?.uuid;
@@ -42,6 +38,12 @@ class ChatClient {
   }
   addSystemMessage(...args: Parameters<Conversation["addSystemMessage"]>) {
     return this.conversation?.addSystemMessage(...args);
+  }
+  sendMessage(...args: Parameters<typeof sendConversationMessage>) {
+    return sendConversationMessage(...args);
+  }
+  loadConversation(...args: Parameters<typeof loadConversation>) {
+    return loadConversation(...args);
   }
 
   // event emitter

@@ -9,4 +9,4 @@ interface FetchPaginationRes<T = any> {
   prev: string | null;
   count: number;
 }
-export {AppOptions, FetchPaginationRes};
+export type {AppOptions, FetchPaginationRes};
