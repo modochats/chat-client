@@ -66,6 +66,10 @@ class ChatClient {
   offAny(listener: EventListener): void {
     this.eventEmitter.offAny(listener);
   }
+  clearConversation() {
+    this.socket.close();
+    this.conversation = undefined;
+  }
 }
 
 export {ChatClient};
