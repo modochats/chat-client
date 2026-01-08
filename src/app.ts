@@ -20,6 +20,7 @@ class ChatClient {
     this.eventEmitter = new EventEmitter();
     if (conversationUUid) this.loadConversation(conversationUUid);
     this.socket = new Socket();
+    window.getMChat = () => this;
   }
   get conversationUuid() {
     return this.conversation?.uuid;
@@ -71,5 +72,4 @@ class ChatClient {
     this.conversation = undefined;
   }
 }
-
 export {ChatClient};
