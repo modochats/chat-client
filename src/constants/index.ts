@@ -1,3 +1,4 @@
+import {updateFetchTool} from "../tools/fetch";
 import {getEnvironment} from "../utils/browser";
 
 let DEBUG = getEnvironment() === "DEV";
@@ -13,6 +14,7 @@ const MAX_SOCKET_RECONNECT_COUNT = 20;
 export const setDebugMode = (debug: boolean) => {
   DEBUG = debug;
   setUrls();
+  updateFetchTool();
 };
 
 export const setUrls = () => {

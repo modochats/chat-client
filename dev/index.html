@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -132,9 +132,10 @@
 
       // Initialize ChatClient with your configuration
       const chatClient = new ChatClient({
-        // chatbotUuid: "",
-        // userData: {uuid: ""},
-        // conversationUUid: "conv-123"
+        chatbotUuid: "",
+        userData: {uuid: ""},
+        conversationUUid: "conv-123",
+        debug: false
       });
 
       // Make chatClient globally accessible
