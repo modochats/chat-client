@@ -6,7 +6,7 @@ import {User} from "./services/user/model";
 import {AppOptions} from "./types/app";
 import {EventListener, EventType, ChatEvent} from "./services/shared/types/events";
 import {loadConversation, sendConversationMessage} from "./services/chat/utils";
-import {isDev, setDebugMode} from "./constants";
+import {DEBUG, setDebugMode} from "./constants";
 
 class ChatClient {
   conversation?: Conversation;
