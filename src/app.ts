@@ -6,6 +6,7 @@ import {User} from "./services/user/model";
 import {AppOptions} from "./types/app";
 import {EventListener, EventType, ChatEvent} from "./services/shared/types/events";
 import {loadConversation, sendConversationMessage} from "./services/chat/utils";
+import {isDev, setDebugMode} from "./constants";
 
 class ChatClient {
   conversation?: Conversation;
@@ -14,7 +15,9 @@ class ChatClient {
   user: User;
   eventEmitter: EventEmitter;
 
-  constructor({chatbotUuid, userData, conversationUUid}: AppOptions) {
+  constructor({chatbotUuid, userData, conversationUUid, debug}: AppOptions) {
+    if (debug !== undefined) setDebugMode(debug);
+
     this.user = new User(userData);
     this.chatbot = new Chatbot(chatbotUuid);
     this.eventEmitter = new EventEmitter();
